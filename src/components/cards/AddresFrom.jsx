@@ -2,62 +2,62 @@
 
 const AddressFromm = () => {
     return (
-        <form className="row g-3">
-            <div className="col-md-6">
-                <label for="inputEmail4" className="form-label">First Name</label>
-                <input type="email" className="form-control" id="inputEmail4" />
+        <form className="grid gap-2 grid-cols-6 bg-gray-100 p-2 font-medium text-gray-500 rounded">
+            <div className="sm:col-span-3 col-span-6 flex flex-col">
+                <label for="inputFastName" className="py-2" >First name</label>
+                <input type="email" className=" border border-current px-1 rounded outline-none" />
             </div>
-            <div className="col-md-6">
-                <label for="inputPassword4" className="form-label">Last Name</label>
-                <input type="text" className="form-control" id="inputPassword4" />
+            <div className="sm:col-span-3 col-span-6 flex flex-col">
+                <label for="inputLastName" className="py-2">Last name</label>
+                <input type="text" className=" border border-current px-1 rounded outline-none" />
             </div>
-            <div className="col-12">
-                <label for="inputAddress" className="form-label">Mobile</label>
-                <input type="tel" className="form-control" id="inputAddress" placeholder="987654321" />
+            <div className="col-span-6 flex flex-col">
+                <label for="inputMobile" className="py-2">Mobile</label>
+                <input type="tel" className=" border border-current px-1 rounded outline-none" placeholder="987654321" />
             </div>
-            <div className="col-12">
-                <label for="inputAddress" className="form-label">Email</label>
-                <input type="email" className="form-control" id="inputAddress" placeholder="abc@example.com" />
+            <div className="col-span-6 flex flex-col">
+                <label for="inputEmail" className="py-2">Email</label>
+                <input type="email" className=" border border-current px-1 rounded outline-none" id="inputAddress" placeholder="abc@example.com" />
             </div>
-            <div className="col-12">
-                <label for="inputAddress2" className="form-label">Address </label>
-                <input type="text" className="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" />
+            <div className="col-span-6 flex flex-col">
+                <label for="inputAddress" className="py-2">Address </label>
+                <input type="text" className=" border border-current px-1 rounded outline-none" placeholder="Apartment, studio, or floor" />
             </div>
-            <div className="col-12">
-                <label for="inputAddress2" className="form-label">Landmark</label>
-                <input type="text" className="form-control" id="inputAddress2" placeholder="Near" />
+            <div className="col-span-6 flex flex-col">
+                <label for="inputLandmark" className="py-2">Landmark</label>
+                <input type="text" className=" border border-current px-1 rounded outline-none" placeholder="Near" />
             </div>
 
-            <div className="col-md-4">
-                <label for="inputState" className="form-label">Country</label>
-                <select id="inputState" className="form-select">
+            <div className="col-span-6 sm:col-span-2 flex flex-col w-full">
+                <label for="inputCountry" className="py-2">Country</label>
+                <select className=" border border-current px-1 rounded outline-none">
                     <option selected>Choose...</option>
                     <option>India</option>
                 </select>
             </div>
-            <div className="col-md-4">
-                <label for="inputState" className="form-label">State</label>
-                <select id="inputState" className="form-select">
+            <div className="col-span-6 sm:col-span-2 flex flex-col">
+                <label for="inputState" className="py-2">State</label>
+                <select className=" border border-current px-1 rounded outline-none">
                     <option selected>Choose...</option>
                     <option>Uttrakhand</option>
                 </select>
             </div>
-            <div className="col-md-2">
-                <label for="inputZip" className="form-label">Zip</label>
-                <input type="text" className="form-control" id="inputZip" />
+            <div className="col-span-6 sm:col-span-2 flex flex-col">
+                <label for="inputZip" className="py-2">Zip</label>
+                <input type="number" className=" border border-current px-1 rounded outline-none" />
             </div>
-            <div className="col-12">
-                <div className="form-check">
-                    <h4>Payment</h4>
-                    <input className="form-check-input" type="radio" id="gridCheck" />
-                    <label className="form-check-label" for="gridCheck">
-                        Cash on Delivery
-                    </label>
-                </div>
+
+            <div className="col-span-6 bg-gray-300 p-2 rounded">
+                <h4>Payment</h4>
+                <input type="radio" />
+                <label className="mx-1" for="gridCheck">
+                    Cash on Delivery
+                </label>
             </div>
-            <div className="col-12">
+
+            {/* <div className="col-12">
                 <button type="submit" className="btn btn-primary">Sign in</button>
-            </div>
+            </div> */}
         </form>
     )
 }

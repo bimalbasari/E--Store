@@ -12,7 +12,7 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Navbar color */
+/* Navbar style */
 .nav-top-bg {
     background-color: #2874f0;
 }
@@ -21,14 +21,18 @@ body {
     background-color: #4084f2;
 }
 
-/* Banner carousel Style */
-.carousel-container {
-
-    max-height: 22rem;
+.nav-logo>a>img {
+    max-width: 80px;
+    max-height: 50px;
 }
+
+/* Banner carousel Style */
+
+
 
 .react-multiple-carousel__arrow {
     background: none !important;
+    z-index: 10 !important;
 
 }
 
@@ -39,7 +43,7 @@ body {
 .react-multi-carousel-dot {
     width: 3rem;
     height: 3px;
-    background-color:rgba(255, 255, 255, 0.37) ;
+    background-color: rgba(255, 255, 255, 0.37);
     border-radius: 0.1rem;
     border: none;
     margin-bottom: 1rem;
