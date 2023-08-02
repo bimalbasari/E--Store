@@ -1,9 +1,0 @@
-{
-    "workbench.list.smoothScrolling": true,
-    "workbench.localHistory.enabled": true,
-    "workbench.productIconTheme": "fluent-icons",
-    "workbench.sash.size": 6,
-    "editor.cursorStyle": "line",
-    "editor.fontSize": 20,
-    "editor.fontFamily": "Consolas, 'Courier New', monospace"
-}
