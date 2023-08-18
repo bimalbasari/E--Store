@@ -8,12 +8,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import jsCookie from "js-cookie";
 import Cookies from "js-cookie";
+import { getCartItems } from "@/utils/CartItesms";
 
 
 const Checkout = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [cartItems, setCartItems] = useState(1)
+    const [cart, setCart] = useState(getCartItems())
     const [bill, setBill] = useState("")
+    const [card, setCard] = useState(false)
     const conutry = Country.getAllCountries()
     const myCountry = watch('country')?.slice(0, 2).toUpperCase()
     const MyStates = State.getStatesOfCountry(myCountry)
@@ -21,6 +24,7 @@ const Checkout = () => {
     const { buyAll, yourCart } = router.query
 
     const onSubmit = data => {
+        setCard(false)
         if (buyAll) { Cookies.remove("cartItems") }
         router.push({
             pathname: "/thank-you",
@@ -32,13 +36,12 @@ const Checkout = () => {
 
     useEffect(() => {
 
-        if (buyAll===true) {
+        if (buyAll === true) {
             console.log(yourCart)
             setBill(JSON.parse(yourCart));
-            setCartItems()
+            setCartItems(cart.length)
 
         } else {
-            console.log(yourCart)
             const product = JSON.parse(yourCart)
             const gstAmount = (product.price * 20) / 100;
             setBill({
@@ -120,13 +123,42 @@ const Checkout = () => {
                     <div className="col-span-6  p-2  my-2 bg-white rounded">
                         {errors.paymentMathod && <small className="text-red-600 rounded-md absolute bg-white p-1">Select a payment mathod </small>}
                         <h4>Payment</h4>
-                        <input type="radio" value="cod" name="paymentMathod" {...register("paymentMathod", { required: true })} />
-                        <label className="mx-1">Cash on Delivery</label>
+
+                        <div >
+                            <input type="radio" value="cod" name="paymentMathod" onClick={() => setCard(false)} {...register("paymentMathod", { required: true })} />
+                            <label className="mx-1">Cash on Delivery</label>
+                        </div>
+
+                        <div >
+                            <input type="radio" value="cod" name="paymentMathod" onClick={() => setCard(true)} {...register("paymentMathod", { required: true })} />
+                            <label className="mx-1">Card</label>
+                        </div>
+                        {card && <div className="grid grid-cols-10 gap-4 border border-black w-3/4 p-4  my-2 bg-black text-white  rounded-md">
+                            <div className="sm:col-span-4 col-span-8">
+                                <label className="mx-1">Name on card</label><br />
+                                <input type="text" className="border border-gray-400 rounded-sm w-full" />
+                                <small>Full name as display on card</small>
+                            </div>
+                            <div className="sm:col-span-4 col-span-8">
+                                <label className="mx-1">Card number</label><br />
+                                <input type="number" className="border border-gray-400 rounded-sm w-full" />
+                            </div>
+                            <div className="sm:col-span-3 col-span-6 ">
+                                <label className="mx-1">Expiration</label><br />
+                                <input type="date" className="border border-gray-400 rounded-sm  w-full" />
+                            </div>
+                            <div className="sm:col-span-2 col-span-4">
+                                <label className="mx-1">CVV</label><br />
+                                <input type="password" className="border border-gray-400 rounded-sm w-full" />
+                            </div>
+                        </div>}
                     </div>
 
                 </div>
                 <div className="sm:col-span-2 col-span-6 flex flex-col" >
-                    <h4 className="text-blue-400 font-semibold text-xl py-2"><span>Your Cart</span> <span></span></h4>
+                    <h4 className="text-blue-400 font-semibold text-xl py-2">
+                        <span>Your Cart</span>
+                        <span className="mx-1">({cartItems})</span></h4>
 
                     <div>
                         <ul className="rounded overflow-hidden  border border-gray-200">

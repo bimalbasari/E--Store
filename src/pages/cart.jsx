@@ -1,3 +1,4 @@
+
 import { Breadcrump } from "@/components/breadcrump/Breadcrump"
 import { getCartItems, removeFromCart, updateCartItems } from "@/utils/CartItesms"
 import Head from "next/head"
@@ -9,6 +10,8 @@ import { useRouter } from "next/router"
 
 
 const Cart = () => {
+    const [apiCall, setApiCall] = useState(true);
+    const [stock, setStock] = useState(0);
     const router = useRouter()
     const [cart, setCart] = useState(getCartItems());
     const [yourCart, setYourCart] = useState({
@@ -17,16 +20,59 @@ const Cart = () => {
         grandTotal: 0
     })
 
-    const incrementQty = (item) => {
-        const newQty = item.qty + 1
-        if (newQty < 10) {
-            const productId = item.id;
-            updateCartItems(productId, newQty);
-            setCart(getCartItems)
+    // const incrementQty = async (item) => {
 
+    //     const newQty = item.qty + 1
+
+    //     if (apiCall === true) {
+    //         setApiCall(false)
+    //         let stock = await fetch(`https://dummyjson.com/products/${item.id}`);
+    //         stock = await stock.json();
+    //         setStock(stock.stock)
+    //         setTimeout(() => setApiCall(true), 1000)
+
+    //     }
+    //     if (newQty < stock) {
+    //         const productId = item.id;
+    //         updateCartItems(productId, newQty);
+
+    //     } else if (newQty > stock) {
+    //         const productId = item.id;
+    //         updateCartItems(productId, stock);
+    //     }
+    //     setCart(getCartItems)
+
+    // }
+    const incrementQty = async (item) => {
+        const newQty = item.qty + 1;
+
+        if (apiCall) {
+            try {
+                const response = await fetch(`https://dummyjson.com/products/${item.id}`);
+                const stockData = await response.json();
+                setStock(stockData.stock);
+                setApiCall(false);
+                setTimeout(() => {
+                    setApiCall(true);
+                }, 1000);
+            } catch (error) {
+                console.error('Error fetching stock:', error);
+                setApiCall(true);
+            }
         }
+        if (!apiCall) {
+            if (newQty <= stock) {
+                const productId = item.id;
+                updateCartItems(productId, newQty);
+            } else if (newQty > stock) {
+                const productId = item.id;
+                updateCartItems(productId, stock);
+            }
+        }
+        setCart(getCartItems);
+    };
 
-    }
+
     const decrementQty = (item) => {
         const newQty = item.qty - 1
         if (newQty > 0) {
@@ -40,6 +86,7 @@ const Cart = () => {
         removeFromCart(item);
         setCart(getCartItems)
     }
+
     const checkoutHandler = () => {
         router.push({
             pathname: "/checkout",
