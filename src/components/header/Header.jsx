@@ -1,48 +1,54 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { TbBrandAdobe } from "react-icons/tb";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import {
-  AboutUs,
-  MyAccount,
-  MyCart,
-  Store,
-  Support,
-} from "../utils/Navbar_Items";
-
-import ResponsiveHeader from "../utils/ResponsiveHeader";
+import { AboutUs, MyAccount, MyCart, SearchBox, Store, Support } from "./Header_Items";
+import { MdArrowDropDown } from "react-icons/md";
+import ResponsiveHeader from "./ResponsiveHeader";
 
 const Header = () => {
-
   const [dropdown, setDropdown] = useState(false);
+  const [myAccount, setMyAccount] = useState(false);
 
   return (
     <>
       {/* Top navbar */}
 
-      <nav className="bg-primary shadow text-light nav-top-bg sm:block hidden">
+      <nav className=" shadow text-light nav-top-bg sm:block hidden">
         <div className=" flex item-center justify-between mx-8">
           <div className="py-2">
             <Link href="/" className="text-white text-xs italic">
               Get Up to 70% Discount Everyday
             </Link>
           </div>
-          <MyAccount />
+          <div className="relative py-2">
+            <button
+              className="text-white text-sm flex font-medium "
+              onClick={() => setMyAccount(!myAccount)}
+            >
+              My Account <MdArrowDropDown className="mt-1" size={24} />
+            </button>
+            {myAccount && (
+              <div onClick={() => setMyAccount(false)}>
+                {" "}
+                <MyAccount />
+              </div>
+            )}
+          </div>
         </div>
       </nav>
       {/* Middle NavBar */}
 
-      <nav className=" nav-bg">
+      <nav className="nav-bg">
         <div className="flex items-center justify-between mx-8">
           <div className="nav-logo py-2">
             <Link href="/">
               <TbBrandAdobe size={35} className="text-yellow-400 font-bold" />
             </Link>
           </div>
-
-{/* HamburgerMenu for small devices */}
+          <div><SearchBox/></div>
+          {/* Hamburger  for small devices */}
           <div
             className="sm:hidden block"
             onClick={() => setDropdown(!dropdown)}

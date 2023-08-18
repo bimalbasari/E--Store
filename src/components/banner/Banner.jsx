@@ -34,10 +34,10 @@ const Banner = () => {
             keyBoardControl={true}
             // dotListClass="custom-dot-list-style"
 
-            className='tracking-wide text-white max-h-96 '
+            className='tracking-wide text-white sm:h-96 h-48 '
         >
             <div className="relative w-full h-full">
-                < Image src="/images/image-1.jpg" width={600} height={460} className="w-full h-full " alt="Slide 1" />
+                < Image src="/images/image-1.jpg" width={600} height={460} className="w-full h-full object-contain " alt="Slide 1" />
                 <div className="absolute  md:bottom-16 buttom-8 text-center  w-full">
                     <h5 className='font-semibold'>Third slide label</h5>
                     <p className='font-normal text-xs mt-3'>Some representative placeholder content for the third slide.</p>
@@ -45,7 +45,7 @@ const Banner = () => {
             </div>
 
             <div className="relative w-full h-full">
-                <Image src="/images/image-2.jpg" width={600} height={460} className="w-full h-full" alt="Slide 2" />
+                <Image src="/images/image-2.jpg" width={600} height={460} className="w-full h-full object-contain" alt="Slide 2" />
                 <div className="absolute md:bottom-16 buttom-8 text-center w-full">
                     <h5 className='font-semibold'>Third slide label</h5>
                     <p className='font-normal text-xs mt-3'>Some representative placeholder content for the third slide.</p>
@@ -53,7 +53,7 @@ const Banner = () => {
             </div>
 
             <div className="relative w-full h-full">
-                <Image src="/images/image-3.jpg" width={600} height={460} className="w-full h-full" alt="Slide 3" />
+                <Image src="/images/image-3.jpg" width={600} height={460} className="w-full h-full object-contain" alt="Slide 3" />
                 <div className="absolute  md:bottom-16 buttom-8 text-center  w-full">
                     <h5 className='font-semibold'>Third slide label</h5>
                     <p className='font-normal text-xs mt-3'>Some representative placeholder content for the third slide.</p>

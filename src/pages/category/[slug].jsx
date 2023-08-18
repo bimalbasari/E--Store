@@ -1,5 +1,5 @@
 import ProductCard from "@/components/cards/ProductCard";
-import { Breadcrump } from "@/components/layout/Breadcrump";
+import { Breadcrump } from "@/components/breadcrump/Breadcrump";
 import Head from "next/head";
 import { useRouter } from "next/router";
 

@@ -1,10 +1,12 @@
 import Layout from '@/components/layout/Layout'
 import '@/styles/globals.css'
+import { Toaster } from 'react-hot-toast'
 
 export default function App({ Component, pageProps }) {
   return (
     <Layout>
-      <Component {...pageProps} />   {/*pages Children*/}
+      <Component {...pageProps} />
+      <Toaster position='top-center'/> 
     </Layout>
   )
 }

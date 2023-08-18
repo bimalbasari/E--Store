@@ -1,5 +1,6 @@
-import Header from "./Header"
-import Sidebar from "./Sidebar"
+import Header from "../header/Header"
+import Sidebar from "../sidebar/Sidebar";
+import Footer from "../Footer/Footer"
 
 
 const Layout = ({ children }) => {
@@ -17,6 +18,7 @@ const Layout = ({ children }) => {
                     </section>
 
                 </div>
+                <Footer/>
             </div>
 
         </>

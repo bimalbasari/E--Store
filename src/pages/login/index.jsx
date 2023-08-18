@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { MdWarning } from "react-icons/md"
+
 const Login = () => {
 
   const [email, setEmail] = useState('');
@@ -75,17 +75,16 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center sm:p-8 pt-4 ">
+
       <div className="bg-blue-100 shadow-md rounded-md p-8 sm:w-96 w-full">
+
         <h2 className="text-2xl font-bold mb-6 text-center">Login </h2>
-        {error &&
-          <div className="flex items-center bg-pink-500 text-white text-sm font-bold px-4 py-3" role="alert">
-            <MdWarning />
-            <p>{error}</p>
-          </div>}
+
         <form onSubmit={handleSubmit}>
 
           <div className="mb-4">
-            <label className="block mb-2" ="email">
+
+            <label className="block mb-2">
               Email:
             </label>
             <input
@@ -99,7 +98,7 @@ const Login = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2" ="password">
+            <label className="block mb-2">
               Password:
             </label>
             <div className="relative">
@@ -128,16 +127,17 @@ const Login = () => {
             Login
           </button>
 
-        </form>
+        </form >
         <div className='w-full text-center mt-4'>
           <Link href="/register"
             type="button"
             className=" text-blue "
           >New user?<span className='text-blue-500 mx-1 font-bold'>Create an account</span>
-          </Link> </div>
+          </Link>
+        </div>
 
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

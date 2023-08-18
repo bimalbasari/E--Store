@@ -6,7 +6,7 @@ import { BiHome, BiRightArrow, BiLeftArrowCircle } from "react-icons/bi"
 export const Breadcrump = ({title}) => {
     const router = useRouter();
     return (
-        <div className=" bg-gray-50 drop-shadow w-full flex item-center justify-between my-2 text-gray-500">
+        <div className=" bg-gray-50 drop-shadow w-full flex item-center justify-between my-2 text-gray-700">
             <div className="flex items-center gap-1">
                 <div className="flex items-center mx-2">
                     <Link href="/"><BiHome size={28} /></Link>

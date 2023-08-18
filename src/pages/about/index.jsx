@@ -1,12 +1,13 @@
+
 import Head from "next/head";
 import Image from "next/image";
 
 const About = () => {
   return (
     <>
-    <Head>
+      <Head>
         <title>About</title>
-    </Head>
+      </Head>
       <div className="container mx-auto p-4 bg-gray-100 rounded">
         <h1 className="text-3xl font-bold mb-4">About Us</h1>
         <p className="text-base">
@@ -53,9 +54,7 @@ const About = () => {
           height={400}
           className="my-4 sm:max-h-4/5 rounded-md"
         />
-        <footer className="bg-gray-800 text-white py-4 text-center ">
-          <p>&copy; {new Date().getFullYear()} Store. All rights reserved.</p>
-        </footer>
+
       </div>
     </>
   );

@@ -130,7 +130,7 @@ const Signup = ({ setAccount }) => {
 
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block mb-2" ="firstName">
+              <label className="block mb-2" >
                 First Name:
               </label>
               <input
@@ -143,7 +143,7 @@ const Signup = ({ setAccount }) => {
               />
             </div>
             <div>
-              <label className="block mb-2" ="lastName">
+              <label className="block mb-2" >
                 Last Name:
               </label>
               <input
@@ -158,7 +158,7 @@ const Signup = ({ setAccount }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2" ="email">
+            <label className="block mb-2" >
               Email:
             </label>
             <input
@@ -171,7 +171,7 @@ const Signup = ({ setAccount }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2" ="mobile">
+            <label className="block mb-2">
               Mobile Number:
             </label>
             <input
@@ -184,7 +184,7 @@ const Signup = ({ setAccount }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2" ="password">
+            <label className="block mb-2">
               Password:
             </label>
             <div className="relative">
@@ -206,7 +206,7 @@ const Signup = ({ setAccount }) => {
             </div>
           </div>
           <div className="mb-4">
-            <label className="block mb-2" ="confirmPassword">
+            <label className="block mb-2">
               Confirm Password:
             </label>
             <input

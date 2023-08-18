@@ -2,7 +2,7 @@ import Link from "next/link";
 import { MdCategory } from "react-icons/md";
 import { BsDash } from "react-icons/bs";
 import useSwr from "swr";
-import { fetcher } from "../utils/swrFetcher";
+import { fetcher } from "@/utils/swrFetcher";
 
 
 const Sidebar = () => {
@@ -13,7 +13,7 @@ const Sidebar = () => {
 
   if (error) return <div>Failed to load</div>;
 
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="w-full">
@@ -25,7 +25,7 @@ const Sidebar = () => {
               Categories
             </h5>
           </li>
-          {data.map((category, i) => {
+          {data?.map((category, i) => {
             return (
               <li key={i + category} className="p-3 text-sm hover:bg-gray-300">
                 <Link
