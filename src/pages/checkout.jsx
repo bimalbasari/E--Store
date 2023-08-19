@@ -6,7 +6,6 @@ import { Country, State, City } from 'country-state-city';
 import { Breadcrump } from "@/components/breadcrump/Breadcrump"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import jsCookie from "js-cookie";
 import Cookies from "js-cookie";
 import { getCartItems } from "@/utils/CartItesms";
 

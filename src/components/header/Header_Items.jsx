@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MdShoppingCart, MdSearch } from "react-icons/md";
 import { getCartItems } from "../../utils/CartItesms";
-
+import useSwr from "swr"
+import { fetcher } from "@/utils/swrFetcher";
+import { useRouter } from "next/router";
 // all NavBar items
 
 //Navbar User account DropDown
@@ -24,15 +26,28 @@ export const MyAccount = () => {
 };
 // Search 
 export const SearchBox = () => {
-  const [search, setSearch] = useState("")
-
+  const [search, setSearch] = useState()
+  const router = useRouter()
+  const handleSearch = () => {
+    router.push(`/search/${search}`)
+  }
   return (
-    <form className="flex bg-white items-center rounded overflow-hidden w-full " >
-      <input type="text" className="h-8 w-auto outline-none px-2" value={search} onChange={(e) => setSearch(e.target.value)} />
-      <button><MdSearch size={25} className="text-blue-600  cursor-pointer" /></button>
-    </form>
-  )
-}// Navbar cart
+
+    <div className="flex bg-white items-center rounded overflow-hidden w-full">
+      <input
+        type="text"
+        className="h-8 w-auto outline-none px-2"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button className="bg-gray-200 cursor-pointer" onClick={handleSearch}>
+        <MdSearch size={25} className="text-blue-600 " />
+      </button>
+    </div>
+
+  );
+};
+// Navbar cart
 
 export const MyCart = ({ items }) => {
   const [cart, setCart] = useState(0);

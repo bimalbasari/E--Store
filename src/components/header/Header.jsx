@@ -47,17 +47,20 @@ const Header = () => {
               <TbBrandAdobe size={35} className="text-yellow-400 font-bold" />
             </Link>
           </div>
-          <div><SearchBox/></div>
-          {/* Hamburger  for small devices */}
-          <div
-            className="sm:hidden block"
-            onClick={() => setDropdown(!dropdown)}
-          >
-            <GiHamburgerMenu size={35} className="text-white" />
-          </div>
 
-          <div className=" sm:block hidden">
-            <MyCart />
+          <div className=" w-auto  flex justify-center sm:gap-4 gap-2 ">
+            <div className=""><SearchBox /></div>
+            {/* Hamburger  for small devices */}
+            <div
+              className="sm:hidden block"
+              onClick={() => setDropdown(!dropdown)}
+            >
+              <GiHamburgerMenu size={35} className="text-white" />
+            </div>
+
+            <div className=" sm:block hidden">
+              <MyCart />
+            </div>
           </div>
         </div>
       </nav>
