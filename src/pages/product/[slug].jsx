@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Breadcrump } from "@/components/breadcrump/Breadcrump";
 import { BiRupee } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addToCart } from "@/utils/CartItesms";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -10,9 +10,10 @@ import { useRouter } from "next/router";
 const SingalProduct = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [curImage, setCurImage] = useState(product?.thumbnail);
-  const [myProduct, setMyProduct] = useState({
-    price: product.price,
-    id: product.id
+  const [yourCart, setYourCart] = useState({
+    subTotal: product.price,
+    gstAmount: 0,
+    grandTotal: 0
   })
   const router = useRouter()
 
@@ -21,11 +22,20 @@ const SingalProduct = ({ product }) => {
       pathname: "/checkout",
       query: {
         buyAll: JSON.stringify(false),
-        yourCart: JSON.stringify(myProduct)
+        quantity: quantity,
+        productId: product.id,
+        yourCart: JSON.stringify(yourCart)
       }
     })
 
   }
+  useEffect(() => {
+    let total = 0;
+    let gstAmount = 0;
+    total += product.price * quantity
+    gstAmount = total * 20 / 100;
+    setYourCart({ ...yourCart, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
+  }, [quantity])
 
   return (
 
@@ -64,7 +74,19 @@ const SingalProduct = ({ product }) => {
             <small>Stocks: {product.stock}</small>
             <h4 className="flex items-center gap-0 font-semibold">
               Price: <BiRupee size={20} />
-              {product?.price}
+              {product.price}
+            </h4>
+            <h4 className="flex items-center gap-0 font-semibold">
+              Subtotal: <BiRupee size={20} />
+              {yourCart.subTotal}
+            </h4>
+            <h4 className="flex items-center gap-0 font-semibold">
+              GST 20% : <BiRupee size={20} />
+              {yourCart.gstAmount}
+            </h4>
+            <h4 className="flex items-center gap-0 font-semibold">
+              Total : <BiRupee size={20} />
+              {yourCart.grandTotal}
             </h4>
 
             <b className="mt-2">Description:</b>

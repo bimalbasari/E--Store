@@ -3,7 +3,8 @@ import { useState } from "react";
 import { TbBrandAdobe } from "react-icons/tb";
 
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AboutUs, MyAccount, MyCart, SearchBox, Store, Support } from "./Header_Items";
+import { AboutUs, MyAccount, MyCart,  Store, Support } from "./Header_Items";
+import SearchBox from "../SearchBox";
 import { MdArrowDropDown } from "react-icons/md";
 import ResponsiveHeader from "./ResponsiveHeader";
 

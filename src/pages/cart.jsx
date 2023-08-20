@@ -96,16 +96,19 @@ const Cart = () => {
             }
         })
     }
-    const buySingalProduct = (price, id) => {
-        const myProduct = {
-            id: id,
-            price: price
-        }
+    const buySingalProduct = (price, id, qty) => {
+        let total = price;
+        let gstAmount = total * 20 / 100;
+        setYourCart({ ...yourCart, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
+
         router.push({
             pathname: "/checkout",
             query: {
                 buyAll: JSON.stringify(false),
-                yourCart: JSON.stringify(myProduct)
+                quantity: qty,
+                productId: id,
+                yourCart: JSON.stringify(yourCart)
+
             }
         })
 
@@ -120,6 +123,7 @@ const Cart = () => {
         gstAmount = total * 20 / 100;
         setYourCart({ ...yourCart, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
     }, [cart])
+
 
     return (
         <>
@@ -187,7 +191,7 @@ const Cart = () => {
                                             <span className="flex items-center gap-0" >
                                                 <BiRupee size={15} />{(item.price * item.qty).toFixed(2)}
                                             </span>
-                                            <button onClick={() => buySingalProduct(item.price, item.id)} className="bg-green-500 p-1 rounded text-white font-semibold">Buy</button>
+                                            <button onClick={() => buySingalProduct(item.price, item.id, item.qty)} className="bg-green-500 p-1 rounded text-white font-semibold">Buy</button>
                                             <button onClick={() => removeHandler(item.id)} ><RiDeleteBin6Line size={28} className="p-1 text-red-600" /></button>
                                         </div>
                                     </td>

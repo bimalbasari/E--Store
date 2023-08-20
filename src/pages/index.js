@@ -3,9 +3,12 @@ const inter = Inter({ subsets: ["latin"] });
 import Banner from "@/components/banner/Banner";
 import ProductCard from "@/components/cards/ProductCard";
 import Head from "next/head";
-
+import { useContext } from "react";
+import { GlobalData } from "./_app";
 
 export default function Home({ products }) {
+  const { setProducts } = useContext(GlobalData);
+  setProducts(products)
   return (
     <>
       <Head>

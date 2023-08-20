@@ -20,7 +20,7 @@ const Checkout = () => {
     const myCountry = watch('country')?.slice(0, 2).toUpperCase()
     const MyStates = State.getStatesOfCountry(myCountry)
     const router = useRouter()
-    const { buyAll, yourCart } = router.query
+    const { buyAll, yourCart, quantity } = router.query
 
     const onSubmit = data => {
         setCard(false)
@@ -34,25 +34,20 @@ const Checkout = () => {
     }
 
     useEffect(() => {
-
-        if (buyAll === true) {
-            console.log(yourCart)
+        if (yourCart != undefined) {
             setBill(JSON.parse(yourCart));
-            setCartItems(cart.length)
+            if (buyAll === true) {
+                setCartItems(cart.length)
+
+            } else {
+                setCartItems(quantity)
+            }
 
         } else {
-            const product = JSON.parse(yourCart)
-            const gstAmount = (product.price * 20) / 100;
-            setBill({
-                subTotal: product.price,
-                gstAmount: gstAmount,
-                grandTotal: product.price + gstAmount
-            })
-
+            router.push("/cart")
         }
 
     }, [])
-
 
     return (
         <>
