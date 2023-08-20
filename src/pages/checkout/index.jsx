@@ -2,40 +2,62 @@
 import Head from "next/head"
 import { BiRupee } from "react-icons/bi";
 import { useForm } from "react-hook-form"
-import { Country, State, City } from 'country-state-city';
+import { Country, State } from 'country-state-city';
 import { Breadcrump } from "@/components/breadcrump/Breadcrump"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 import { getCartItems } from "@/utils/CartItesms";
+import { getBillAddress, setBillAddress } from "@/utils/BillingAddres";
 
 
 const Checkout = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+    const [address, setAddress] = useState(getBillAddress())
+    const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm({ defaultValues: address });
     const [cartItems, setCartItems] = useState(1)
     const [cart, setCart] = useState(getCartItems())
     const [bill, setBill] = useState("")
+    const [saveaddres, setSaveAddress] = useState(false)
     const [card, setCard] = useState(false)
     const conutry = Country.getAllCountries()
     const myCountry = watch('country')?.slice(0, 2).toUpperCase()
     const MyStates = State.getStatesOfCountry(myCountry)
     const router = useRouter()
-    const { buyAll, yourCart, quantity } = router.query
+    const { buyAll, yourBill, quantity, product } = router.query
 
-    const onSubmit = data => {
+    const onSubmit = (data) => {
+        if (saveaddres) {
+            setBillAddress(data)
+        }
         setCard(false)
-        if (buyAll) { Cookies.remove("cartItems") }
-        router.push({
-            pathname: "/thank-you",
-            query: {
-                cart: JSON.stringify(cartItems)
-            }
-        })
+        if (buyAll == true) {
+            router.push({
+                pathname: "/thank-you",
+                query: {
+                    buyAll: JSON.stringify("true"),
+                    yourBill: yourBill,
+                    quantity: JSON.stringify(cartItems),
+                    product: JSON.stringify(cart)
+                }
+            })
+        } else {
+            router.push({
+                pathname: "/thank-you",
+                query: {
+                    buyAll: JSON.stringify("false"),
+                    yourBill: JSON.stringify(yourBill),
+                    quantity: JSON.stringify(quantity),
+                    product: product
+                }
+            })
+        }
     }
 
     useEffect(() => {
-        if (yourCart != undefined) {
-            setBill(JSON.parse(yourCart));
+        if (yourBill != undefined) {
+
+            setBill(JSON.parse(yourBill));
+
             if (buyAll === true) {
                 setCartItems(cart.length)
 
@@ -124,7 +146,7 @@ const Checkout = () => {
                         </div>
 
                         <div >
-                            <input type="radio" value="cod" name="paymentMathod" onClick={() => setCard(true)} {...register("paymentMathod", { required: true })} />
+                            <input type="radio" value="card" name="paymentMathod" onClick={() => setCard(true)} {...register("paymentMathod", { required: true })} />
                             <label className="mx-1">Card</label>
                         </div>
                         {card && <div className="grid grid-cols-10 gap-4 border border-black w-3/4 p-4  my-2 bg-black text-white  rounded-md">
@@ -171,6 +193,9 @@ const Checkout = () => {
                         </ul>
                         <div className="border border-gray-200 p-1 rounded my-2">
                             <button type="submit" className="p-1 w-full text-white font-semibold text-center bg-blue-500 rounded">Order Place</button>
+                        </div>
+                        <div className="border border-gray-200 p-1 rounded my-2">
+                            <button type="submit" onClick={() => setSaveAddress(true)} className="p-1 w-full text-white font-semibold text-center bg-yellow-500 rounded">Save address & Order </button>
                         </div>
                     </div>
                 </div>

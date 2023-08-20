@@ -40,4 +40,5 @@ const updateCartItems = (productId, quantity) => {
   setCartItems(cartItems);
 };
 
+
 export { getCartItems, addToCart, removeFromCart, updateCartItems };

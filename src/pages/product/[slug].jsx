@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 const SingalProduct = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [curImage, setCurImage] = useState(product?.thumbnail);
-  const [yourCart, setYourCart] = useState({
+  const [yourBill, setYourBill] = useState({
     subTotal: product.price,
     gstAmount: 0,
     grandTotal: 0
@@ -23,8 +23,8 @@ const SingalProduct = ({ product }) => {
       query: {
         buyAll: JSON.stringify(false),
         quantity: quantity,
-        productId: product.id,
-        yourCart: JSON.stringify(yourCart)
+        product: JSON.stringify(product),
+        yourBill: JSON.stringify(yourBill)
       }
     })
 
@@ -34,7 +34,7 @@ const SingalProduct = ({ product }) => {
     let gstAmount = 0;
     total += product.price * quantity
     gstAmount = total * 20 / 100;
-    setYourCart({ ...yourCart, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
+    setYourBill({ ...yourBill, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
   }, [quantity])
 
   return (
@@ -63,6 +63,7 @@ const SingalProduct = ({ product }) => {
                     onClick={() => setCurImage(img)}
                     width={55}
                     height={50}
+                    alt={product?.title}
                     className="border p-1 border-gray-500 object-contain rounded cursor-pointer w-12 h-12"
                   />
                 ))}
@@ -78,15 +79,15 @@ const SingalProduct = ({ product }) => {
             </h4>
             <h4 className="flex items-center gap-0 font-semibold">
               Subtotal: <BiRupee size={20} />
-              {yourCart.subTotal}
+              {yourBill.subTotal}
             </h4>
             <h4 className="flex items-center gap-0 font-semibold">
               GST 20% : <BiRupee size={20} />
-              {yourCart.gstAmount}
+              {yourBill.gstAmount}
             </h4>
             <h4 className="flex items-center gap-0 font-semibold">
               Total : <BiRupee size={20} />
-              {yourCart.grandTotal}
+              {yourBill.grandTotal}
             </h4>
 
             <b className="mt-2">Description:</b>

@@ -5,7 +5,7 @@ const ThankYou = () => {
     console.log("router", router.query)
     return (
         <>
-        <h1>Thank you for shopping</h1>
+            <h1>Thank you for shopping</h1>
         </>
     )
 }

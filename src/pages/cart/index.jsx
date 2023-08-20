@@ -14,7 +14,7 @@ const Cart = () => {
     const [stock, setStock] = useState(0);
     const router = useRouter()
     const [cart, setCart] = useState(getCartItems());
-    const [yourCart, setYourCart] = useState({
+    const [yourBill, setYourBill] = useState({
         subTotal: 0,
         gstAmount: 0,
         grandTotal: 0
@@ -92,22 +92,25 @@ const Cart = () => {
             pathname: "/checkout",
             query: {
                 buyAll: JSON.stringify(true),
-                yourCart: JSON.stringify(yourCart),
+                yourBill: JSON.stringify(yourBill),
+                quantity: "",
+                product: "",
             }
         })
     }
-    const buySingalProduct = (price, id, qty) => {
-        let total = price;
+    const buySingalProduct = (item) => {
+        console.log(item)
+        let total = item.price;
         let gstAmount = total * 20 / 100;
-        setYourCart({ ...yourCart, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
+        setYourBill({ ...yourBill, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
 
         router.push({
             pathname: "/checkout",
             query: {
                 buyAll: JSON.stringify(false),
-                quantity: qty,
-                productId: id,
-                yourCart: JSON.stringify(yourCart)
+                quantity: JSON.stringify(item.qty),
+                product: JSON.stringify(item),
+                yourBill: JSON.stringify(yourBill)
 
             }
         })
@@ -121,7 +124,7 @@ const Cart = () => {
             total += item.price * item.qty
         })
         gstAmount = total * 20 / 100;
-        setYourCart({ ...yourCart, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
+        setYourBill({ ...yourBill, subTotal: total, gstAmount: gstAmount, grandTotal: total + gstAmount })
     }, [cart])
 
 
@@ -191,7 +194,7 @@ const Cart = () => {
                                             <span className="flex items-center gap-0" >
                                                 <BiRupee size={15} />{(item.price * item.qty).toFixed(2)}
                                             </span>
-                                            <button onClick={() => buySingalProduct(item.price, item.id, item.qty)} className="bg-green-500 p-1 rounded text-white font-semibold">Buy</button>
+                                            <button onClick={() => buySingalProduct(item)} className="bg-green-500 p-1 rounded text-white font-semibold">Buy</button>
                                             <button onClick={() => removeHandler(item.id)} ><RiDeleteBin6Line size={28} className="p-1 text-red-600" /></button>
                                         </div>
                                     </td>
@@ -203,7 +206,7 @@ const Cart = () => {
                                 <th className="border-b p-3" colSpan={2}>Subtotal</th>
 
                                 <th className="border-b p-3" >
-                                    <div className="flex items-center text-center"><BiRupee size={18} />{yourCart?.subTotal.toFixed(2)}
+                                    <div className="flex items-center text-center"><BiRupee size={18} />{yourBill?.subTotal.toFixed(2)}
                                     </div>
                                 </th>
                             </tr>
@@ -212,7 +215,7 @@ const Cart = () => {
                                 <th className="border-b p-3" colSpan={2}>20% GST</th>
 
                                 <th className="border-b p-3" >
-                                    <div className="flex items-center text-center"><BiRupee size={18} />{yourCart?.gstAmount?.toFixed(2)}
+                                    <div className="flex items-center text-center"><BiRupee size={18} />{yourBill?.gstAmount?.toFixed(2)}
                                     </div>
                                 </th>
                             </tr>
@@ -229,7 +232,7 @@ const Cart = () => {
                                 <th className="border-b p-3" colSpan={2}>Grand Total</th>
 
                                 <th className="border-b p-3" >
-                                    <div className="flex items-center text-center"><BiRupee size={18} />{yourCart?.grandTotal.toFixed(2)}
+                                    <div className="flex items-center text-center"><BiRupee size={18} />{yourBill?.grandTotal.toFixed(2)}
                                     </div>
                                 </th>
                             </tr>
