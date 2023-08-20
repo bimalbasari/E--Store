@@ -25,7 +25,7 @@ const Sidebar = () => {
               Categories
             </h5>
           </li>
-          {data?.map((category, i) => {
+          {data && data?.map((category, i) => {
             return (
               <li key={i + category} className="p-3 text-sm hover:bg-gray-300">
                 <Link

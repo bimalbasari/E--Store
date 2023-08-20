@@ -20,55 +20,36 @@ const Cart = () => {
         grandTotal: 0
     })
 
-    // const incrementQty = async (item) => {
-
-    //     const newQty = item.qty + 1
-
-    //     if (apiCall === true) {
-    //         setApiCall(false)
-    //         let stock = await fetch(`https://dummyjson.com/products/${item.id}`);
-    //         stock = await stock.json();
-    //         setStock(stock.stock)
-    //         setTimeout(() => setApiCall(true), 1000)
-
-    //     }
-    //     if (newQty < stock) {
-    //         const productId = item.id;
-    //         updateCartItems(productId, newQty);
-
-    //     } else if (newQty > stock) {
-    //         const productId = item.id;
-    //         updateCartItems(productId, stock);
-    //     }
-    //     setCart(getCartItems)
-
-    // }
+ 
     const incrementQty = async (item) => {
         const newQty = item.qty + 1;
 
         if (apiCall) {
+            setApiCall(false);
             try {
-                const response = await fetch(`https://dummyjson.com/products/${item.id}`);
-                const stockData = await response.json();
+                let stockData = await fetch(`https://dummyjson.com/products/${item.id}`);
+                stockData = await stockData.json();
                 setStock(stockData.stock);
-                setApiCall(false);
-                setTimeout(() => {
+
+                setTimeout(function () {
                     setApiCall(true);
                 }, 1000);
+
+                if (stock == stockData.stock && newQty > stock) {
+                    const productId = item.id;
+                    updateCartItems(productId, stock);
+                }
             } catch (error) {
                 console.error('Error fetching stock:', error);
                 setApiCall(true);
             }
         }
-        if (!apiCall) {
-            if (newQty <= stock) {
-                const productId = item.id;
-                updateCartItems(productId, newQty);
-            } else if (newQty > stock) {
-                const productId = item.id;
-                updateCartItems(productId, stock);
-            }
+
+        if (newQty <= stock) {
+            const productId = item.id;
+            updateCartItems(productId, newQty);
         }
+
         setCart(getCartItems);
     };
 
