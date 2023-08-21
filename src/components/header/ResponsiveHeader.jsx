@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { AboutUs, MyAccount, MyCart, Store, Support } from "./Header_Items";
+import { AboutUs, MyCart, Store, Support } from "./Header_Items";
+import  MyAccount from "../Myaccount"
 
 // This Nav Layout for small devices
 

@@ -5,24 +5,6 @@ import { getCartItems } from "../../utils/CartItesms";
 
 // all NavBar items
 
-//Navbar User account DropDown
-
-export const MyAccount = () => {
-
-  return (
-    <ul className=" sm:w-24 w-full bg-gray-200 text-center font-semibold   p-3 sm:m-0   absolute rounded text-sm">
-      <li className="my-1 hover:text-blue-600 hover:font-bold">
-        <Link href="/register">Register</Link>
-      </li>
-      <hr />
-      <li className="my-1  hover:text-blue-600 hover:font-bold">
-        <Link href="/login">Log in</Link>
-      </li>
-    </ul>
-  )
-
-};
-
 // Navbar cart
 
 export const MyCart = ({ items }) => {

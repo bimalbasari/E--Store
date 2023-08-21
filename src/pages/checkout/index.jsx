@@ -36,8 +36,7 @@ const Checkout = () => {
                 query: {
                     buyAll: JSON.stringify("true"),
                     yourBill: yourBill,
-                    quantity: JSON.stringify(cartItems),
-                    product: JSON.stringify(cart)
+                    address: JSON.stringify(data)
                 }
             })
         } else {
@@ -45,9 +44,10 @@ const Checkout = () => {
                 pathname: "/thank-you",
                 query: {
                     buyAll: JSON.stringify("false"),
-                    yourBill: JSON.stringify(yourBill),
-                    quantity: JSON.stringify(quantity),
-                    product: product
+                    yourBill:yourBill,
+                    quantity:quantity,
+                    product: product,
+                    address: JSON.stringify(data)
                 }
             })
         }

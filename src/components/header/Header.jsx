@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { TbBrandAdobe } from "react-icons/tb";
-
+import MyAccount from "../Myaccount"
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AboutUs, MyAccount, MyCart,  Store, Support } from "./Header_Items";
+import { AboutUs, MyCart, Store, Support } from "./Header_Items";
 import SearchBox from "../SearchBox";
 import { MdArrowDropDown } from "react-icons/md";
 import ResponsiveHeader from "./ResponsiveHeader";
@@ -31,7 +31,7 @@ const Header = () => {
               My Account <MdArrowDropDown className="mt-1" size={24} />
             </button>
             {myAccount && (
-              <div onClick={() => setMyAccount(false)}>
+              <div className="w-full" onClick={() => setMyAccount(false)}>
                 {" "}
                 <MyAccount />
               </div>
@@ -39,6 +39,8 @@ const Header = () => {
           </div>
         </div>
       </nav>
+
+
       {/* Middle NavBar */}
 
       <nav className="nav-bg">

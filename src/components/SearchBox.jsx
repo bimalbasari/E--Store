@@ -1,11 +1,9 @@
 import { useContext, useState } from "react"
 import { useRouter } from "next/router";
 import { GlobalData } from "@/pages/_app";
-import { MdSearch } from "react-icons/md";
 import Link from "next/link"
-
 import Image from "next/image";
-// Search 
+
 const SearchBox = () => {
     const { products } = useContext(GlobalData)
     const [searchValue, setSearchValue] = useState();
