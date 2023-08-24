@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from "react-hook-form"
-import { GlobalData } from '../_app';
 import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import { toast } from 'react-hot-toast';
+import { getUserData, setUserData } from '@/utils/auth';
 
 const Login = () => {
-  const { user, setUser } = useContext(GlobalData)
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter()
@@ -18,19 +19,25 @@ const Login = () => {
         body: JSON.stringify(data)
       })
       const userData = await loginUser.json()
-      if (userData.name) { setUser(userData) }
 
-    } catch (error) {
-      console.error(error)
+      if (userData.username) {
+        setUserData(userData)
+        router.push("/")
+      } else {
+        toast.error(userData.message)
+      }
+
+
+    } catch (err) {
+      console.log(err)
     }
   }
   useEffect(() => {
-    if (user) {
+    if (getUserData()) {
       router.push("/")
-
     }
 
-  }, [user])
+  },[])
   return (
     <div className="flex justify-center items-center sm:p-8 pt-4 ">
 

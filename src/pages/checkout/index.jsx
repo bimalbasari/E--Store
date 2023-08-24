@@ -4,65 +4,74 @@ import { BiRupee } from "react-icons/bi";
 import { useForm } from "react-hook-form"
 import { Country, State } from 'country-state-city';
 import { Breadcrump } from "@/components/breadcrump/Breadcrump"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getCartItems } from "@/utils/CartItesms";
 import { getBillAddress, setBillAddress } from "@/utils/BillingAddres";
+import Link from "next/link";
+import { GlobalData } from "../_app";
+import Cookies from "js-cookie";
 
 
 const Checkout = () => {
-
     const [address, setAddress] = useState(getBillAddress())
-    const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm({ defaultValues: address });
-    const [cartItems, setCartItems] = useState(1)
-    const [cart, setCart] = useState(getCartItems())
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues: address });
+    const [buytItems, setBuyItems] = useState(1);
     const [bill, setBill] = useState("")
-    const [saveaddres, setSaveAddress] = useState(false)
-    const [card, setCard] = useState(false)
+    const [saveaddres, setSaveAddress] = useState(false);
+    const [paymentMathod, setPaymentMathod] = useState("/thank-you")
     const conutry = Country.getAllCountries()
     const myCountry = watch('country')?.slice(0, 2).toUpperCase()
-    const MyStates = State.getStatesOfCountry(myCountry)
+    const MyStates = State.getStatesOfCountry(myCountry);
+
     const router = useRouter()
+
     const { buyAll, yourBill, quantity, product } = router.query
 
     const onSubmit = (data) => {
         if (saveaddres) {
             setBillAddress(data)
         }
-        setCard(false)
-        if (buyAll == true) {
-            router.push({
-                pathname: "/thank-you",
-                query: {
-                    buyAll: JSON.stringify("true"),
-                    yourBill: yourBill,
-                    address: JSON.stringify(data)
-                }
-            })
+        let token = Cookies.get("token")
+        token = token && JSON.parse(token)
+
+        if (!token) {
+            router.push("/login")
         } else {
-            router.push({
-                pathname: "/thank-you",
-                query: {
-                    buyAll: JSON.stringify("false"),
-                    yourBill:yourBill,
-                    quantity:quantity,
-                    product: product,
-                    address: JSON.stringify(data)
-                }
-            })
+
+            if (buyAll == true) {
+                router.push({
+                    pathname: paymentMathod,
+                    query: {
+                        buyAll: JSON.stringify("true"),
+                        yourBill: yourBill,
+                        address: JSON.stringify(data)
+                    }
+                })
+            } else {
+                router.push({
+                    pathname: paymentMathod,
+                    query: {
+                        buyAll: buyAll,
+                        yourBill: yourBill,
+                        quantity: quantity,
+                        product: product,
+                        address: JSON.stringify(data)
+                    }
+                })
+            }
         }
     }
 
     useEffect(() => {
+        if (watch("paymentMathod") == "card") {
+            setPaymentMathod("/payment")
+        }
         if (yourBill != undefined) {
-
             setBill(JSON.parse(yourBill));
+            setBuyItems(quantity)
+            if (watch("paymentMthod") == "card") {
 
-            if (buyAll === true) {
-                setCartItems(cart.length)
-
-            } else {
-                setCartItems(quantity)
             }
 
         } else {
@@ -141,40 +150,21 @@ const Checkout = () => {
                         <h4>Payment</h4>
 
                         <div >
-                            <input type="radio" value="cod" name="paymentMathod" onClick={() => setCard(false)} {...register("paymentMathod", { required: true })} />
+                            <input type="radio" value="cod" name="paymentMathod" onClick={()=>setPaymentMathod("thank-you")}  {...register("paymentMathod", { required: true })} />
                             <label className="mx-1">Cash on Delivery</label>
                         </div>
 
                         <div >
-                            <input type="radio" value="card" name="paymentMathod" onClick={() => setCard(true)} {...register("paymentMathod", { required: true })} />
+                            <input type="radio" value="card" name="paymentMathod" onClick={()=>setPaymentMathod("/payment")} {...register("paymentMathod", { required: true })} />
                             <label className="mx-1">Card</label>
                         </div>
-                        {card && <div className="grid grid-cols-10 gap-4 border border-black w-3/4 p-4  my-2 bg-black text-white  rounded-md">
-                            <div className="sm:col-span-4 col-span-8">
-                                <label className="mx-1">Name on card</label><br />
-                                <input type="text" className="border border-gray-400 rounded-sm w-full" />
-                                <small>Full name as display on card</small>
-                            </div>
-                            <div className="sm:col-span-4 col-span-8">
-                                <label className="mx-1">Card number</label><br />
-                                <input type="number" className="border border-gray-400 rounded-sm w-full" />
-                            </div>
-                            <div className="sm:col-span-3 col-span-6 ">
-                                <label className="mx-1">Expiration</label><br />
-                                <input type="date" className="border border-gray-400 rounded-sm  w-full" />
-                            </div>
-                            <div className="sm:col-span-2 col-span-4">
-                                <label className="mx-1">CVV</label><br />
-                                <input type="password" className="border border-gray-400 rounded-sm w-full" />
-                            </div>
-                        </div>}
                     </div>
 
                 </div>
                 <div className="sm:col-span-2 col-span-6 flex flex-col" >
                     <h4 className="text-blue-400 font-semibold text-xl py-2">
                         <span>Your Cart</span>
-                        <span className="mx-1">({cartItems})</span></h4>
+                        <span className="mx-1">({buytItems})</span></h4>
 
                     <div>
                         <ul className="rounded overflow-hidden  border border-gray-200">
@@ -192,7 +182,7 @@ const Checkout = () => {
                             </li>
                         </ul>
                         <div className="border border-gray-200 p-1 rounded my-2">
-                            <button type="submit" className="p-1 w-full text-white font-semibold text-center bg-blue-500 rounded">Order Place</button>
+                            <button type="submit" className="p-1 w-full text-white font-semibold text-center bg-blue-500 rounded">Place Order</button>
                         </div>
                         <div className="border border-gray-200 p-1 rounded my-2">
                             <button type="submit" onClick={() => setSaveAddress(true)} className="p-1 w-full text-white font-semibold text-center bg-yellow-500 rounded">Save address & Order </button>
@@ -200,8 +190,13 @@ const Checkout = () => {
                     </div>
                 </div>
             </form>
+
         </>
     )
 }
 
 export default Checkout
+
+/**
+ * http://localhost:3000/checkout?buyAll=false&quantity=1&product=%7B%22id%22%3A2%2C%22title%22%3A%22iPhone+X%22%2C%22description%22%3A%22SIM-Free%2C+Model+A19211+6.5-inch+Super+Retina+HD+display+with+OLED+technology+A12+Bionic+chip+with+...%22%2C%22price%22%3A899%2C%22discountPercentage%22%3A17.94%2C%22rating%22%3A4.44%2C%22stock%22%3A34%2C%22brand%22%3A%22Apple%22%2C%22category%22%3A%22smartphones%22%2C%22thumbnail%22%3A%22https%3A%2F%2Fi.dummyjson.com%2Fdata%2Fproducts%2F2%2Fthumbnail.jpg%22%2C%22images%22%3A%5B%22https%3A%2F%2Fi.dummyjson.com%2Fdata%2Fproducts%2F2%2F1.jpg%22%2C%22https%3A%2F%2Fi.dummyjson.com%2Fdata%2Fproducts%2F2%2F2.jpg%22%2C%22https%3A%2F%2Fi.dummyjson.com%2Fdata%2Fproducts%2F2%2F3.jpg%22%2C%22https%3A%2F%2Fi.dummyjson.com%2Fdata%2Fproducts%2F2%2Fthumbnail.jpg%22%5D%7D&yourBill=%7B%22subTotal%22%3A899%2C%22gstAmount%22%3A179.8%2C%22grandTotal%22%3A1078.8%7D
+ */

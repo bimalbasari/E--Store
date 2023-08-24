@@ -1,38 +1,43 @@
-import { getCartItems } from "@/utils/CartItesms"
+import { getCartItems, removeFromCart } from "@/utils/CartItesms"
+import Cookies from "js-cookie"
 import Head from "next/head"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { BiRupee } from "react-icons/bi"
-
 const { useRouter } = require("next/router")
 
 const ThankYou = () => {
     const router = useRouter()
-    const [singleProduct, setSingleProduct] = useState(true)
+    const [allProduct, setAllProduct] = useState(true)
     const [items, setItems] = useState(1)
     const [cart, setCart] = useState()
     const [bill, setBill] = useState()
     const [BillingAddres, setBillAddress] = useState()
     const { buyAll, yourBill, quantity, product, address } = router.query
+    const query = router.query
     const getCurrentDate = () => {
         const currentDate = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return currentDate.toLocaleDateString('en-US', options);
     }
     useEffect(() => {
-        setSingleProduct(JSON.parse(buyAll))
-        if (singleProduct === false) {
+        setAllProduct(JSON.parse(buyAll))
+        if (allProduct === false) {
+            // console.log(quantity, yourBill, product, "singalProduct")
+            setCart(JSON.parse(product))
             setItems(JSON.parse(quantity))
             setBill(JSON.parse(yourBill))
-            setCart(JSON.parse(product))
             setBillAddress(JSON.parse(address))
+            removeFromCart(cart.id)
         } else {
+            setCart(getCartItems())
             setBill(JSON.parse(yourBill))
             setBillAddress(JSON.parse(address))
-            setCart(getCartItems())
+            Cookies.remove('cartItems')
         }
 
 
-    }, [])
+    }, [allProduct])
     return (
         <>
             <Head>
@@ -53,17 +58,22 @@ const ThankYou = () => {
 
                     <div className="mb-4">
                         <h2 className="text-xl font-semibold mb-2">Billing Details</h2>
-                        <div>
-                            <p className="font-semibold">Shipping Address:</p>
-                            <p>Name:{BillingAddres?.firstName} {BillingAddres?.lastName}</p>
-                            <p>Landmark:{BillingAddres?.landmark}</p>
-                            <p>Address:{BillingAddres?.address}</p>
-                            <p>Zip:{BillingAddres?.zip}</p>
-                            <p>Satate:{BillingAddres?.state}</p>
+                        <div className="font-semibold">
+                            <p className="text-xl">Shipping Address:</p>
+                            <div>
+                                <p>Name:{BillingAddres?.firstName} {BillingAddres?.lastName}</p>
+                                <p>Mobile:{BillingAddres?.mobile}</p>
+                                <p>Email:{BillingAddres?.email}</p>
+                            </div>
+                            <p>State:{BillingAddres?.state}</p>
                             <p>Country:{BillingAddres?.country}</p>
-                            <p>Mobile:{BillingAddres?.mobile}</p>
-                            <p>Email:{BillingAddres?.email}</p>
-                            <p>Payment:{BillingAddres?.paymentMathod}</p>
+                            <div className="flex gap-1 ">
+                                <p>Address:{BillingAddres?.address}</p>
+                                <p>Zip: {BillingAddres?.zip}</p>
+                                <p>Landmark: {BillingAddres?.landmark}</p>
+                            </div>
+
+                            <p>Payment: {BillingAddres?.paymentMathod}</p>
                         </div>
 
                     </div>
@@ -71,8 +81,8 @@ const ThankYou = () => {
 
                     <div className="mb-4">
                         <h2 className="text-xl font-semibold mb-2">Invoice Items</h2>
-                        <table className="w-full">
-                            <thead className="bg-gray-400">
+                        <table className="w-full p-8 bg-gray-300 min-h-full">
+                            <thead className="bg-gray-400 p-2">
                                 <tr className="border-b">
                                     <th className="text-left">Product</th>
                                     <th className="text-right">Price</th>
@@ -80,9 +90,9 @@ const ThankYou = () => {
                                     <th className="text-right">Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {singleProduct && cart?.map((item, index) => (
-                                    <tr key={index} className="border-b p-1">
+                            <tbody className="bg-gray-200 p-2">
+                                {allProduct && cart?.map((item, index) => (
+                                    <tr key={index} className="border-b p-1 px-2 ">
                                         <td>{item.title}</td>
                                         <td className="text-right">{item.price}</td>
                                         <td className="text-right">{item.qty}</td>
@@ -90,7 +100,7 @@ const ThankYou = () => {
                                     </tr>
                                 ))}
 
-                                {!singleProduct && <tr className="border-b p-1">
+                                {!allProduct && <tr className="border-b p-1">
                                     <td>{cart?.title}</td>
                                     <td className="text-right">{cart?.price}</td>
                                     <td className="text-right">{items}</td>
@@ -99,7 +109,7 @@ const ThankYou = () => {
 
                             </tbody>
                         </table>
-                        <ul className="rounded overflow-hidden ">
+                        <ul className="rounded overflow-hidden border border-t-2 border-dotted border-black mt-2">
                             <li className="flex justify-between  p-1 border-b border-gray-200 ">
                                 <div className="flex items-center text-sm">Subtotal (<BiRupee />)</div>
                                 <strong>{bill?.subTotal}</strong>
@@ -115,6 +125,10 @@ const ThankYou = () => {
                         </ul>
                     </div>
                 </div>
+                <div className="w-full text-center mt-4">
+                    <Link href="/" className=" mx-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-full text-lg font-semibold">Continue to Shoping</Link>
+                </div>
+
             </section>
 
 

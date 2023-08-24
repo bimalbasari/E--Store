@@ -15,6 +15,7 @@ const SingalProduct = ({ product }) => {
     gstAmount: 0,
     grandTotal: 0
   })
+  
   const router = useRouter()
 
   const buySingalProduct = () => {
@@ -22,7 +23,7 @@ const SingalProduct = ({ product }) => {
       pathname: "/checkout",
       query: {
         buyAll: JSON.stringify(false),
-        quantity: quantity,
+        quantity: JSON.stringify(quantity),
         product: JSON.stringify(product),
         yourBill: JSON.stringify(yourBill)
       }
@@ -77,16 +78,13 @@ const SingalProduct = ({ product }) => {
               Price: <BiRupee size={20} />
               {product.price}
             </h4>
-            <h4 className="flex items-center gap-0 font-semibold">
-              Subtotal: <BiRupee size={20} />
-              {yourBill.subTotal}
-            </h4>
+
             <h4 className="flex items-center gap-0 font-semibold">
               GST 20% : <BiRupee size={20} />
               {yourBill.gstAmount}
             </h4>
             <h4 className="flex items-center gap-0 font-semibold">
-              Total : <BiRupee size={20} />
+              Total Price: <BiRupee size={20} />
               {yourBill.grandTotal}
             </h4>
 

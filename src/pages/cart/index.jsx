@@ -20,7 +20,7 @@ const Cart = () => {
         grandTotal: 0
     })
 
- 
+
     const incrementQty = async (item) => {
         const newQty = item.qty + 1;
 
@@ -63,22 +63,12 @@ const Cart = () => {
 
         }
     }
+
     const removeHandler = (item) => {
         removeFromCart(item);
         setCart(getCartItems)
     }
 
-    const checkoutHandler = () => {
-        router.push({
-            pathname: "/checkout",
-            query: {
-                buyAll: JSON.stringify(true),
-                yourBill: JSON.stringify(yourBill),
-                quantity: "",
-                product: "",
-            }
-        })
-    }
     const buySingalProduct = (item) => {
         console.log(item)
         let total = item.price;
@@ -97,6 +87,20 @@ const Cart = () => {
         })
 
     }
+
+    //buy  all product from cart
+    const checkoutHandler = () => {
+        router.push({
+            pathname: "/checkout",
+            query: {
+                buyAll: JSON.stringify(true),
+                yourBill: JSON.stringify(yourBill),
+                quantity: JSON.stringify(cart.length),
+                product: "",
+            }
+        })
+    }
+
 
     useEffect(() => {
         let total = 0;
