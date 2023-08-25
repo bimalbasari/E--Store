@@ -8,11 +8,12 @@ const { useRouter } = require("next/router")
 
 const ThankYou = () => {
     const router = useRouter()
-    const [allProduct, setAllProduct] = useState(true)
+    const [allProduct, setAllProduct] = useState('')
     const [items, setItems] = useState(1)
     const [cart, setCart] = useState()
     const [bill, setBill] = useState()
     const [BillingAddres, setBillAddress] = useState()
+    console.log(allProduct)
     const { buyAll, yourBill, quantity, product, address } = router.query
     const query = router.query
     const getCurrentDate = () => {
@@ -22,13 +23,13 @@ const ThankYou = () => {
     }
     useEffect(() => {
         setAllProduct(JSON.parse(buyAll))
-        if (allProduct === false) {
+        if (!allProduct) {
             // console.log(quantity, yourBill, product, "singalProduct")
             setCart(JSON.parse(product))
             setItems(JSON.parse(quantity))
             setBill(JSON.parse(yourBill))
             setBillAddress(JSON.parse(address))
-            removeFromCart(cart.id)
+            removeFromCart(cart?.id)
         } else {
             setCart(getCartItems())
             setBill(JSON.parse(yourBill))
@@ -52,30 +53,28 @@ const ThankYou = () => {
 
                     <div className="flex justify-between mb-4">
                         <div className="text-lg font-semibold">Your  Invoice</div>
-                        <div className="text-gray-600">Date: {getCurrentDate()}</div>
+                        <div className="text-gray-600">{getCurrentDate()}</div>
                     </div>
 
 
                     <div className="mb-4">
-                        <h2 className="text-xl font-semibold mb-2">Billing Details</h2>
+                        <h2 className="text-xl  mb-2">Billing Details</h2>
                         <div className="font-semibold">
                             <p className="text-xl">Shipping Address:</p>
                             <div>
-                                <p>Name:{BillingAddres?.firstName} {BillingAddres?.lastName}</p>
-                                <p>Mobile:{BillingAddres?.mobile}</p>
-                                <p>Email:{BillingAddres?.email}</p>
+                                <p><strong>{BillingAddres?.firstName} {BillingAddres?.lastName}</strong></p>
+                                <p><strong>Mobile:</strong> {BillingAddres?.mobile}</p>
+                                <p><strong>Email:</strong> {BillingAddres?.email}</p>
                             </div>
-                            <p>State:{BillingAddres?.state}</p>
-                            <p>Country:{BillingAddres?.country}</p>
-                            <div className="flex gap-1 ">
-                                <p>Address:{BillingAddres?.address}</p>
-                                <p>Zip: {BillingAddres?.zip}</p>
-                                <p>Landmark: {BillingAddres?.landmark}</p>
+                            <p><strong>State:</strong>{BillingAddres?.state}</p>
+                            <p><strong>Country:</strong>{BillingAddres?.country}</p>
+                            <div className="sm:flex gap-1 ">
+                                <p><strong>Address:</strong>{BillingAddres?.address}</p>
+                                <p><strong>Zip:</strong> {BillingAddres?.zip}</p>
+                                <p><strong>Landmark:</strong> {BillingAddres?.landmark}</p>
                             </div>
-
-                            <p>Payment: {BillingAddres?.paymentMathod}</p>
+                            <p><strong>Payment: </strong>{BillingAddres?.paymentMathod}</p>
                         </div>
-
                     </div>
 
 
@@ -114,11 +113,11 @@ const ThankYou = () => {
                                 <div className="flex items-center text-sm">Subtotal (<BiRupee />)</div>
                                 <strong>{bill?.subTotal}</strong>
                             </li>
-                            <li className="flex justify-between  p-1  border-b border-gray-200 ">
+                            <li className="flex justify-between  p-1  border-b-2 border-gray-300 ">
                                 <div className="flex items-center text-sm">GST 20% (<BiRupee />)</div>
                                 <strong>{bill?.gstAmount}</strong>
                             </li>
-                            <li className="flex justify-between  p-1 border-b border-gray-200 ">
+                            <li className="flex justify-between  p-1  border-gray-200 ">
                                 <div className="flex items-center text-sm">Total (<BiRupee />)</div>
                                 <strong>{bill?.grandTotal}</strong>
                             </li>

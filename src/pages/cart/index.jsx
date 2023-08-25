@@ -123,7 +123,7 @@ const Cart = () => {
 
             {cart.length > 0 ?
                 <div className="sm:w-full">
-                    <table className="sm:w-full  ">
+                    <table className="sm:w-full table-auto  ">
                         <thead className="bg-gray-100 border-b-2 border-gray-200 w-full">
                             <tr className="w-full">
                                 <th scope="col" className="sm:p-3 p-1 text-sm font-samibold tracking-wide ">Item</th>
@@ -135,10 +135,10 @@ const Cart = () => {
                         <tbody>
 
                             {cart?.map((item) => (
-                                <tr key={item.id} className="border-b " >
+                                <tr key={item.id} className="border-b" >
                                     <td scope="col" className="sm:p-3 p-1 text-sm text-gray-700 text-left">
                                         <div className="flex items-center justify-start  gap-3">
-                                            <Image src={item?.image} className="rounded-full sm:h-12  sm:w-12 h-8 w-8" alt={item?.title} height={40} width={40} />
+                                            <Image src={item?.image} className="rounded-full sm:h-12  sm:w-12 sm:block hidden" alt={item?.title} height={40} width={40} />
                                             {item?.title}
                                         </div>
                                     </td>
@@ -161,7 +161,7 @@ const Cart = () => {
                                                 type="number"
                                                 readOnly
                                                 value={item.qty}
-                                                className="sm:w-14 w-6 pl-2 sm:text-center outline-none border-gray-400 border "
+                                                className="sm:w-14 w-6 sm:pl-2 text-center outline-none border-gray-400 border "
                                             />
                                             <button
                                                 className=" bg-gray-300   w-6 border-black border rounded-r hover:bg-gray-400 font-bold sm:text-xl"

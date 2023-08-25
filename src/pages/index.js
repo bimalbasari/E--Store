@@ -3,12 +3,14 @@ const inter = Inter({ subsets: ["latin"] });
 import Banner from "@/components/banner/Banner";
 import ProductCard from "@/components/cards/ProductCard";
 import Head from "next/head";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalData } from "./_app";
 
 export default function Home({ products }) {
   const { setProducts } = useContext(GlobalData);
-  setProducts(products)
+  useEffect(() => {
+    setProducts(products);
+  }, [products]);
   return (
     <>
       <Head>
@@ -25,12 +27,11 @@ export default function Home({ products }) {
 
         <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 m-2">
           {products &&
-            products.map(item => (
+            products.map((item) => (
               <div key={item.id}>
                 <ProductCard item={item} />
               </div>
-            )
-            )}
+            ))}
         </div>
       </main>
     </>

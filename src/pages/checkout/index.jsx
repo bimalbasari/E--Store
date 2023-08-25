@@ -11,9 +11,11 @@ import { getBillAddress, setBillAddress } from "@/utils/BillingAddres";
 import Link from "next/link";
 import { GlobalData } from "../_app";
 import Cookies from "js-cookie";
+import { getUserData } from "@/utils/auth";
 
 
 const Checkout = () => {
+    const [user,setUser]=useState(getUserData())
     const [address, setAddress] = useState(getBillAddress())
     const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues: address });
     const [buytItems, setBuyItems] = useState(1);
@@ -23,7 +25,6 @@ const Checkout = () => {
     const conutry = Country.getAllCountries()
     const myCountry = watch('country')?.slice(0, 2).toUpperCase()
     const MyStates = State.getStatesOfCountry(myCountry);
-
     const router = useRouter()
 
     const { buyAll, yourBill, quantity, product } = router.query
@@ -32,10 +33,9 @@ const Checkout = () => {
         if (saveaddres) {
             setBillAddress(data)
         }
-        let token = Cookies.get("token")
-        token = token && JSON.parse(token)
+       
 
-        if (!token) {
+        if (!user.token) {
             router.push("/login")
         } else {
 
