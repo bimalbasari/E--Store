@@ -14,7 +14,7 @@ const ThankYou = () => {
     const [cart, setCart] = useState()
     const [bill, setBill] = useState()
     const [BillingAddres, setBillAddress] = useState()
-    console.log(allProduct, cart)
+   
     const getCurrentDate = () => {
         const currentDate = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -29,13 +29,12 @@ const ThankYou = () => {
             setBill(JSON.parse(yourBill))
             setBillAddress(JSON.parse(address))
             removeFromCart(cart?.id)
-            console.log("singal")
         } else {
             setCart(getCartItems())
             setBill(JSON.parse(yourBill))
             setBillAddress(JSON.parse(address))
             cart ? Cookies.remove('cartItems') : setCart(getCartItems())
-            console.log("all")
+          
         }
     }, [allProduct])
     return (

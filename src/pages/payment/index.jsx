@@ -75,8 +75,8 @@ function PaymentPage() {
                                 </div>
                             </div>
                             <div>
-                                <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-blue-400">
-                                    Pay Now <BiRupee />{bill}
+                                <button type="submit" className="w-full  py-2 px-4 border border-transparent rounded-md shadow-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-blue-400">
+                                    Pay Now <BiRupee  className='inline'/>{bill}
                                 </button>
                             </div>
                         </form>
@@ -94,7 +94,7 @@ function PaymentPage() {
                     </div>
                 </div>
             ) : (
-                <div className="flex justify-center  gap-2 items-center sm:h-3/4 h-screen bg-blue-500">
+                <div className="flex justify-center  gap-2 items-center sm:h-2/4 h-screen bg-blue-500">
                     <div className="animate-spin rounded-full border-t-8 border-b-8 border-white h-12 w-12"></div>
                     <strong className='text-xl text-white font-extrabold'> Processing...</strong>
                 </div>
