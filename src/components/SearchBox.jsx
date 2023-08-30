@@ -11,7 +11,7 @@ const SearchBox = () => {
 
     const handleSearch = () => {
         router.push(`/search/${searchValue}`)
-        setSearchValue()
+        setSearchValue("")
     }
 
     return (
@@ -31,7 +31,7 @@ const SearchBox = () => {
                 {searchValue && products?.filter(item => item.title.toLowerCase().includes(searchValue?.toLowerCase())).map((item) => (
                     < div key={item.id} className="flex gap-2 items-center border-b w-full  p-2">
                         <Image src={item.thumbnail} height={50} width={50} alt="Image" className="h-8 w-8 rounded-full" />
-                        <Link href={`/product/${item.id}`} onClick={() => setSearchValue()}>
+                        <Link href={`/product/${item.id}`} onClick={() => setSearchValue("")}>
                             {item.title}
                         </Link>
                     </div >)

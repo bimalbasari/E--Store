@@ -31,7 +31,7 @@ function PaymentPage() {
     }
 
     useEffect(() => {
-        if (query.yourBill) { setBill(JSON.parse(query?.yourBill).grandTotal) }else{router.push("/")}
+        if (query.yourBill) { setBill(JSON.parse(query?.yourBill).grandTotal) } else { router.push("/") }
 
         // Get the current date in the format "YYYY-MM-DD"
         const currentDate = new Date().toISOString().split('T')[0];
@@ -76,7 +76,7 @@ function PaymentPage() {
                             </div>
                             <div>
                                 <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-blue-400">
-                                    Pay Now {bill}
+                                    Pay Now <BiRupee />{bill}
                                 </button>
                             </div>
                         </form>
