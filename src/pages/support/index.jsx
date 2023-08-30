@@ -1,11 +1,12 @@
 
+import Footer from '@/components/Footer/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const Support = () => {
     return (
         <div className="container mx-auto p-4  bg-gray-100 rounded">
-        
+
             <h1 className="text-3xl font-bold mb-4">Support</h1>
             <p className="text-lg">
                 If you have any questions or need assistance, our support team is here
@@ -75,6 +76,7 @@ const Support = () => {
 
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

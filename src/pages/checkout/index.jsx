@@ -29,13 +29,14 @@ const Checkout = () => {
 
     const { buyAll, yourBill, quantity, product } = router.query
 
+
     const onSubmit = (data) => {
         if (saveaddres) {
             setBillAddress(data)
         }
        
 
-        if (!user.token) {
+        if (!user) {
             router.push("/login")
         } else {
 

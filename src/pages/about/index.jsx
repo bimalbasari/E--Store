@@ -1,4 +1,5 @@
 
+import Footer from "@/components/Footer/Footer";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -56,6 +57,7 @@ const About = () => {
         />
 
       </div>
+      <Footer/>
     </>
   );
 };

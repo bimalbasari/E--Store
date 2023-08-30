@@ -22,7 +22,7 @@ const Login = () => {
 
       if (userData.username) {
         setUserData(userData)
-        router.push("/")
+        router.back()
       } else {
         toast.error(userData.message)
       }
@@ -37,7 +37,7 @@ const Login = () => {
       router.push("/")
     }
 
-  },[])
+  }, [])
   return (
     <div className="flex justify-center items-center sm:p-8 pt-4 ">
 

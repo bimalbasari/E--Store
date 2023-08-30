@@ -58,8 +58,9 @@ const SingalProduct = ({ product }) => {
 
             <div className="mt-1 flex  justify-center items-center gap-1">
               {product &&
-                product.images.map((img) => (
+                product.images.map((img,index) => (
                   <Image
+                  key={index}
                     src={img}
                     onClick={() => setCurImage(img)}
                     width={55}

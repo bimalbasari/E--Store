@@ -8,14 +8,13 @@ const { useRouter } = require("next/router")
 
 const ThankYou = () => {
     const router = useRouter()
+    const { buyAll, yourBill, quantity, product, address } = router.query
     const [allProduct, setAllProduct] = useState('')
     const [items, setItems] = useState(1)
     const [cart, setCart] = useState()
     const [bill, setBill] = useState()
     const [BillingAddres, setBillAddress] = useState()
-    console.log(allProduct)
-    const { buyAll, yourBill, quantity, product, address } = router.query
-    const query = router.query
+    console.log(allProduct, cart)
     const getCurrentDate = () => {
         const currentDate = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -23,21 +22,21 @@ const ThankYou = () => {
     }
     useEffect(() => {
         setAllProduct(JSON.parse(buyAll))
-        if (!allProduct) {
+        if (buyAll == "false") {
             // console.log(quantity, yourBill, product, "singalProduct")
             setCart(JSON.parse(product))
             setItems(JSON.parse(quantity))
             setBill(JSON.parse(yourBill))
             setBillAddress(JSON.parse(address))
             removeFromCart(cart?.id)
+            console.log("singal")
         } else {
             setCart(getCartItems())
             setBill(JSON.parse(yourBill))
             setBillAddress(JSON.parse(address))
-            Cookies.remove('cartItems')
+            cart ? Cookies.remove('cartItems') : setCart(getCartItems())
+            console.log("all")
         }
-
-
     }, [allProduct])
     return (
         <>
@@ -91,7 +90,7 @@ const ThankYou = () => {
                             </thead>
                             <tbody className="bg-gray-200 p-2">
                                 {allProduct && cart?.map((item, index) => (
-                                    <tr key={index} className="border-b p-1 px-2 ">
+                                    <tr key={index} className="border-b border-black p-1 px-2 ">
                                         <td>{item.title}</td>
                                         <td className="text-right">{item.price}</td>
                                         <td className="text-right">{item.qty}</td>
